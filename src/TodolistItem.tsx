@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { ChangeEvent, type KeyboardEvent, useState } from "react";
 import type { FilterValues, Task } from "./App";
 import { Button } from "./Button";
 
@@ -19,9 +19,19 @@ export const TodolistItem = ({
 }: Props) => {
   const [taskTitle, setTaskTitle] = useState("");
 
+  const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskTitle(event.currentTarget.value);
+  };
+
   const createTaskHandler = () => {
     createTask(taskTitle);
     setTaskTitle("");
+  };
+
+  const createTaskOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === "Enter") {
+      createTaskHandler();
+    }
   };
 
   return (
@@ -29,10 +39,9 @@ export const TodolistItem = ({
       <h3>{title}</h3>
       <div>
         <input
-          onChange={(e) => {
-            setTaskTitle(e.currentTarget.value);
-          }}
           value={taskTitle}
+          onChange={changeTaskTitleHandler}
+          onKeyDown={createTaskOnEnterHandler}
         />
         <Button title={"+"} onClick={createTaskHandler} />
       </div>
@@ -41,11 +50,14 @@ export const TodolistItem = ({
       ) : (
         <ul>
           {tasks.map((task) => {
+            const deleteTaskHandler = () => {
+              deleteTask(task.id);
+            };
             return (
               <li key={task.id}>
                 <input type="checkbox" checked={task.isDone} />
                 <span>{task.title}</span>
-                <Button title="close" onClick={() => deleteTask(task.id)} />
+                <Button title="close" onClick={deleteTaskHandler} />
               </li>
             );
           })}
