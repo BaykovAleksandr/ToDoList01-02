@@ -44,6 +44,13 @@ export const App = () => {
     return setFilter(item);
   };
 
+  const changeTaskStatus = (taskId: string, isDone: boolean) => {
+    const newState = tasks.map((task) =>
+      task.id == taskId ? { ...task, isDone } : task
+    );
+    setTasks(newState);
+  };
+
   return (
     <div className="app">
       <TodolistItem
@@ -52,6 +59,7 @@ export const App = () => {
         deleteTask={deleteTask}
         filterTask={filterTask}
         createTask={createTask}
+        changeTaskStatus={changeTaskStatus}
       />
     </div>
   );
