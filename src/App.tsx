@@ -31,14 +31,21 @@ export const App = () => {
   const deleteTask = (itemId: string) =>
     setTasks(tasks.filter((item) => item.id !== itemId));
 
-  let filteredTasks = tasks;
+   function getFilteredTasks() {
+     let tasksForTodolist = tasks;
 
-  if (filter === "active") {
-    filteredTasks = tasks.filter((task) => !task.isDone);
-  }
-  if (filter === "completed") {
-    filteredTasks = tasks.filter((task) => task.isDone);
-  }
+     switch (filter) {
+       case "active":
+         tasksForTodolist = tasks.filter((t) => t.isDone === false);
+         break;
+
+       case "completed":
+         tasksForTodolist = tasks.filter((t) => t.isDone === false);
+         break;
+     }
+
+     return tasksForTodolist;
+   }
 
   const filterTask = (item: FilterValues) => {
     return setFilter(item);
@@ -55,7 +62,7 @@ export const App = () => {
     <div className="app">
       <TodolistItem
         title="What to learn"
-        tasks={filteredTasks}
+        tasks={getFilteredTasks()}
         deleteTask={deleteTask}
         filterTask={filterTask}
         createTask={createTask}
