@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import type { FilterValues, Task, Todolist } from "./App";
 import { Button } from "./Button";
 import { CreateItemForm } from "./CreateItemForm";
+import { EditableSpan } from './EditableSpan';
 
 type Props = {
   tasks: Task[];
@@ -47,8 +48,8 @@ export const TodolistItem = ({
         <Button title={"x"} onClick={deleteTodolistHandler} />
       </div>
       <div>
-  
         <CreateItemForm onCreateItem={createTaskHandler} />
+
         {error && <div className={"error-message"}>{error}</div>}
       </div>
       {tasks.length < 1 ? (
@@ -66,19 +67,22 @@ export const TodolistItem = ({
               changeTaskStatus(id, task.id, newStatusValue);
             };
             return (
-              <li key={task.id} className={task.isDone ? "is-done" : ""}>
-                <input
-                  type="checkbox"
-                  checked={task.isDone}
-                  onChange={changeTaskStatusHandler}
-                />
-                <span>{task.title}</span>
-                <Button title="close" onClick={deleteTaskHandler} />
-              </li>
+              <>
+                <li key={task.id} className={task.isDone ? "is-done" : ""}>
+                  <input
+                    type="checkbox"
+                    checked={task.isDone}
+                    onChange={changeTaskStatusHandler}
+                  />
+                  <EditableSpan value={task.title} />
+                  <Button title="close" onClick={deleteTaskHandler} />
+                </li>
+              </>
             );
           })}
         </ul>
       )}
+      
       <div>
         <Button
           className={filter === "all" ? "active-filter" : ""}
