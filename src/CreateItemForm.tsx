@@ -35,7 +35,7 @@ export const CreateItemForm = ({ onCreateItem }: Props) => {
       <input
         className={error ? "error" : ""}
         value={title}
-        onChange={changeTitleHandler}
+        onChange={changeItemTitleHandler}
         onKeyDown={createItemOnEnterHandler}
       />
       <Button title={"+"} onClick={createItemHandler} />

@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { TodolistItem } from "./TodolistItem";
 import { v1 } from "uuid";
+import { CreateItemForm } from './CreateItemForm';
 
 const todolistId1 = v1();
 const todolistId2 = v1();
@@ -41,6 +42,12 @@ export const App = () => {
       { id: v1(), title: "GraphQL", isDone: false },
     ],
   });
+
+  const createTodolist = (title: string) => {
+    const newTodolist: Todolist = { id: v1(), title, filter: "all" };
+    setTodolists([newTodolist, ...todolists]);
+    setTasks({ ...tasks, [newTodolist.id]: [] });
+  };
 
   const deleteTodolist = (todolistId: string) => {
     setTodolists(todolists.filter((todolist) => todolist.id !== todolistId));
@@ -82,6 +89,7 @@ export const App = () => {
 
   return (
     <div className="app">
+      <CreateItemForm onCreateItem={createTodolist} />
       {todolists.map((todolist) => {
         const todolistTasks = tasks[todolist.id];
         let filteredTasks = todolistTasks;
