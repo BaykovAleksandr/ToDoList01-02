@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import type { FilterValues, Task, Todolist } from "./App";
 import { Button } from "./Button";
 import { CreateItemForm } from "./CreateItemForm";
-import { EditableSpan } from './EditableSpan';
+import { EditableSpan } from "./EditableSpan";
 
 type Props = {
   tasks: Task[];
@@ -16,6 +16,8 @@ type Props = {
     isDone: boolean
   ) => void;
   deleteTodolist: (todolistId: string) => void;
+  changeTaskTitle: (todolistId: string, taskId: string, title: string) => void;
+  changeTodolistTitle: (todolistId: string, title: string) => void;
 };
 
 export const TodolistItem = ({
@@ -26,9 +28,9 @@ export const TodolistItem = ({
   createTask,
   changeTaskStatus,
   deleteTodolist,
+  changeTaskTitle,
+  changeTodolistTitle,
 }: Props) => {
-  const [error, setError] = useState<string | null>(null);
-
   const deleteTodolistHandler = () => {
     deleteTodolist(id);
   };
@@ -41,16 +43,20 @@ export const TodolistItem = ({
     changeFilter(id, filter);
   };
 
+  const changeTodolistTitleHandler = (title: string) => {
+    changeTodolistTitle(id, title);
+  };
+
   return (
     <div>
       <div className={"container"}>
-        <h3>{title}</h3>
+        <h3>
+          <EditableSpan value={title} onChange={changeTodolistTitleHandler} />
+        </h3>
         <Button title={"x"} onClick={deleteTodolistHandler} />
       </div>
       <div>
         <CreateItemForm onCreateItem={createTaskHandler} />
-
-        {error && <div className={"error-message"}>{error}</div>}
       </div>
       {tasks.length < 1 ? (
         <p>Тасок нет</p>
@@ -66,6 +72,10 @@ export const TodolistItem = ({
               const newStatusValue = e.currentTarget.checked;
               changeTaskStatus(id, task.id, newStatusValue);
             };
+
+            const changeTaskTitleHandler = (title: string) => {
+              changeTaskTitle(id, task.id, title);
+            };
             return (
               <>
                 <li key={task.id} className={task.isDone ? "is-done" : ""}>
@@ -74,7 +84,10 @@ export const TodolistItem = ({
                     checked={task.isDone}
                     onChange={changeTaskStatusHandler}
                   />
-                  <EditableSpan value={task.title} />
+                  <EditableSpan
+                    value={task.title}
+                    onChange={changeTaskTitleHandler}
+                  />
                   <Button title="close" onClick={deleteTaskHandler} />
                 </li>
               </>
@@ -82,7 +95,7 @@ export const TodolistItem = ({
           })}
         </ul>
       )}
-      
+
       <div>
         <Button
           className={filter === "all" ? "active-filter" : ""}

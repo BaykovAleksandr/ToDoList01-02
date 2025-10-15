@@ -43,6 +43,27 @@ export const App = () => {
     ],
   });
 
+  const changeTodolistTitle = (todolistId: string, title: string) => {
+    setTodolists(
+      todolists.map((todolist) =>
+        todolist.id === todolistId ? { ...todolist, title } : todolist
+      )
+    );
+  };
+
+  const changeTaskTitle = (
+    todolistId: string,
+    taskId: string,
+    title: string
+  ) => {
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].map((task) =>
+        task.id === taskId ? { ...task, title } : task
+      ),
+    });
+  };
+
   const createTodolist = (title: string) => {
     const newTodolist: Todolist = { id: v1(), title, filter: "all" };
     setTodolists([newTodolist, ...todolists]);
@@ -110,6 +131,8 @@ export const App = () => {
             createTask={createTask}
             changeTaskStatus={changeTaskStatus}
             deleteTodolist={deleteTodolist}
+            changeTaskTitle={changeTaskTitle}
+            changeTodolistTitle={changeTodolistTitle}
           />
         );
       })}
