@@ -2,6 +2,7 @@ import { ChangeEvent } from "react";
 import type { FilterValues, Task, Todolist } from "./App";
 import { CreateItemForm } from "./CreateItemForm";
 import { EditableSpan } from "./EditableSpan";
+import {containerSx, getListItemSx} from './TodolistItem.styles'
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
@@ -9,6 +10,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
+import Box from '@mui/material/Box';
 
 type Props = {
   tasks: Task[];
@@ -86,15 +88,17 @@ export const TodolistItem = ({
             };
             return (
               <>
-                <ListItem key={task.id} className={task.isDone ? "is-done" : ""}>
-                  <Checkbox
-                    checked={task.isDone}
-                    onChange={changeTaskStatusHandler}
-                  />
-                  <EditableSpan
-                    value={task.title}
-                    onChange={changeTaskTitleHandler}
-                  />
+                <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
+                  <div>
+                    <Checkbox
+                      checked={task.isDone}
+                      onChange={changeTaskStatusHandler}
+                    />
+                    <EditableSpan
+                      value={task.title}
+                      onChange={changeTaskTitleHandler}
+                    />
+                  </div>
                   <IconButton onClick={deleteTaskHandler}>
                     <DeleteForeverTwoToneIcon />
                   </IconButton>
@@ -105,7 +109,7 @@ export const TodolistItem = ({
         </List>
       )}
 
-      <div>
+      <Box sx={containerSx}>
         <Button
           variant={filter === "all" ? "outlined" : "text"}
           color={"inherit"}
@@ -127,7 +131,7 @@ export const TodolistItem = ({
         >
           Completed
         </Button>
-      </div>
+      </Box>
     </div>
   );
 };
