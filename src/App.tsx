@@ -13,7 +13,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { containerSx } from "./TodolistItem.styles";
 import { NavButton } from "./NavButton";
-import Switch from "@mui/material/Switch";
 import CssBaseline from "@mui/material/CssBaseline";
 import { MaterialUISwitch } from './Switch';
 
