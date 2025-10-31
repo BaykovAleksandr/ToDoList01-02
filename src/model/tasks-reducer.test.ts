@@ -2,6 +2,7 @@ import { beforeEach, expect, test } from "vitest";
 import type { TasksState } from "../App";
 import {
   changeTaskStatusAC,
+  changeTaskTitleAC,
   createTaskAC,
   createTodolistAC,
   deleteTaskAC,
@@ -82,13 +83,18 @@ test("correct task should be created at correct array", () => {
 test("correct task should change its status", () => {
   const endState = tasksReducer(
     startState,
-    changeTaskStatusAC(
-      "todolistId2",
-      "2",
-      false,
-    )
+    changeTaskStatusAC("todolistId2", "2", false)
   );
 
   expect(endState.todolistId2.length).toBe(3);
   expect(endState.todolistId2[1].isDone).toBe(false);
+});
+
+test("correct task should change its title", () => {
+  const endState = tasksReducer(
+    startState,
+    changeTaskTitleAC("todolistId2", "2", "NextJS")
+  );
+  expect(endState.todolistId2.length).toBe(3);
+  expect(endState.todolistId2[1].title).toBe("NextJS");
 });

@@ -5,7 +5,9 @@ const initialState: Todolist[] = [];
 
 export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>;
 export type CreateTodolistAction = ReturnType<typeof createTodolistAC>;
-export type ChangeTodolistTitleAction = ReturnType<typeof changeTodolistTitleAC>;
+export type ChangeTodolistTitleAction = ReturnType<
+  typeof changeTodolistTitleAC
+>;
 export type СhangeTodolistFilter = ReturnType<typeof changeTodolistFilterAC>;
 
 type Actions =
