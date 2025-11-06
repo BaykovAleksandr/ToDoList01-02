@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import type { TasksState } from "../App";
+import type { TasksState } from "../app/App";
 
 export type createTodolistAction = ReturnType<typeof createTodolistAC>;
 export type deleteTodolistAction = ReturnType<typeof deleteTodolistAC>;

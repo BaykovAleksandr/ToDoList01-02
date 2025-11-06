@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import type { FilterValues, Todolist } from "../App";
+import type { FilterValues, Todolist } from "../app/App";
 
 const initialState: Todolist[] = [];
 
@@ -50,7 +50,6 @@ export const todolistsReducer = (
     default:
       return state;
   }
-  //
 };
 
 export const deleteTodolistAC = (id: string) => {

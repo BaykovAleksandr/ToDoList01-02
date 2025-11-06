@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import type { FilterValues, Task, Todolist } from "./App";
+import type { FilterValues, Task, Todolist } from "./app/App";
 import { CreateItemForm } from "./CreateItemForm";
 import { EditableSpan } from "./EditableSpan";
 import {containerSx, getListItemSx} from './TodolistItem.styles'
