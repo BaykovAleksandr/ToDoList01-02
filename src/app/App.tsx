@@ -29,7 +29,7 @@ import { NavButton } from "../NavButton";
 import { TodolistItem } from "../TodolistItem";
 import { containerSx } from "../TodolistItem.styles";
 import Grid from "@mui/material/Grid";
-import { selectThemeMode } from "./app-selector";
+import { selectThemeMode } from "./app-selectors";
 import { changeThemeModeAC } from "./app-reducer";
 import { getTheme } from '../common/hooks/theme/theme';
 
