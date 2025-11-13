@@ -33,6 +33,9 @@ importers:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@19.0.2)(react@19.0.0)(redux@5.0.1)
     devDependencies:
+      '@types/node':
+        specifier: ^24.10.1
+        version: 24.10.1
       '@types/react':
         specifier: 19.0.2
         version: 19.0.2
@@ -41,7 +44,7 @@ importers:
         version: 19.0.2(@types/react@19.0.2)
       '@vitejs/plugin-react-swc':
         specifier: 3.7.2
-        version: 3.7.2(vite@6.0.6)
+        version: 3.7.2(vite@6.0.6(@types/node@24.10.1))
       globals:
         specifier: 15.14.0
         version: 15.14.0
@@ -50,10 +53,10 @@ importers:
         version: 5.7.2
       vite:
         specifier: 6.0.6
-        version: 6.0.6
+        version: 6.0.6(@types/node@24.10.1)
       vitest:
         specifier: 2.1.8
-        version: 2.1.8
+        version: 2.1.8(@types/node@24.10.1)
 
 packages:
 
@@ -751,6 +754,9 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
+  '@types/node@24.10.1':
+    resolution: {integrity: sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ==}
+
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
 
@@ -1102,6 +1108,9 @@ packages:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   use-sync-external-store@1.6.0:
     resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
@@ -1739,6 +1748,10 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
+  '@types/node@24.10.1':
+    dependencies:
+      undici-types: 7.16.0
+
   '@types/parse-json@4.0.2': {}
 
   '@types/prop-types@15.7.15': {}
@@ -1757,10 +1770,10 @@ snapshots:
 
   '@types/use-sync-external-store@0.0.6': {}
 
-  '@vitejs/plugin-react-swc@3.7.2(vite@6.0.6)':
+  '@vitejs/plugin-react-swc@3.7.2(vite@6.0.6(@types/node@24.10.1))':
     dependencies:
       '@swc/core': 1.13.5
-      vite: 6.0.6
+      vite: 6.0.6(@types/node@24.10.1)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -1771,13 +1784,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.8(vite@5.4.20)':
+  '@vitest/mocker@2.1.8(vite@5.4.20(@types/node@24.10.1))':
     dependencies:
       '@vitest/spy': 2.1.8
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
-      vite: 5.4.20
+      vite: 5.4.20(@types/node@24.10.1)
 
   '@vitest/pretty-format@2.1.8':
     dependencies:
@@ -2110,17 +2123,19 @@ snapshots:
 
   typescript@5.7.2: {}
 
+  undici-types@7.16.0: {}
+
   use-sync-external-store@1.6.0(react@19.0.0):
     dependencies:
       react: 19.0.0
 
-  vite-node@2.1.8:
+  vite-node@2.1.8(@types/node@24.10.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 1.1.2
-      vite: 5.4.20
+      vite: 5.4.20(@types/node@24.10.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -2132,26 +2147,28 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.4.20:
+  vite@5.4.20(@types/node@24.10.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
       rollup: 4.50.2
     optionalDependencies:
+      '@types/node': 24.10.1
       fsevents: 2.3.3
 
-  vite@6.0.6:
+  vite@6.0.6(@types/node@24.10.1):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.6
       rollup: 4.50.2
     optionalDependencies:
+      '@types/node': 24.10.1
       fsevents: 2.3.3
 
-  vitest@2.1.8:
+  vitest@2.1.8(@types/node@24.10.1):
     dependencies:
       '@vitest/expect': 2.1.8
-      '@vitest/mocker': 2.1.8(vite@5.4.20)
+      '@vitest/mocker': 2.1.8(vite@5.4.20(@types/node@24.10.1))
       '@vitest/pretty-format': 2.1.9
       '@vitest/runner': 2.1.8
       '@vitest/snapshot': 2.1.8
@@ -2167,9 +2184,11 @@ snapshots:
       tinyexec: 0.3.2
       tinypool: 1.1.1
       tinyrainbow: 1.2.0
-      vite: 5.4.20
-      vite-node: 2.1.8
+      vite: 5.4.20(@types/node@24.10.1)
+      vite-node: 2.1.8(@types/node@24.10.1)
       why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 24.10.1
     transitivePeerDependencies:
       - less
       - lightningcss

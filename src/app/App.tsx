@@ -5,13 +5,12 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import Toolbar from "@mui/material/Toolbar";
-import { useState } from "react";
-import { useAppDispatch } from "../common/hooks/useAppDispatch";
-import { useAppSelector } from "../common/hooks/useAppSelector";
-import { CreateItemForm } from "../CreateItemForm";
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import { useAppSelector } from "@/common/hooks/useAppSelector";
+import { CreateItemForm } from "@/CreateItemForm";
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
