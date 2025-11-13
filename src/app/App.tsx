@@ -30,6 +30,9 @@ import { NavButton } from "../NavButton";
 import { TodolistItem } from "../TodolistItem";
 import { containerSx } from "../TodolistItem.styles";
 import Grid from "@mui/material/Grid";
+import { selectThemeMode } from "./app-selector";
+import { changeThemeModeAC } from "./app-reducer";
+import { getTheme } from '../common/hooks/theme/theme';
 
 export type Todolist = {
   id: string;
@@ -47,29 +50,20 @@ export type FilterValues = "all" | "active" | "completed";
 
 export type TasksState = Record<string, Task[]>;
 
-type ThemeMode = "dark" | "light";
-
 export const App = () => {
   const todolists = useAppSelector(selectTodolists);
   const tasks = useAppSelector(selectTasks);
+  const themeMode = useAppSelector(selectThemeMode);
 
   const dispatch = useAppDispatch();
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>("light");
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: "#087EA4",
-      },
-    },
-  });
+  const theme = getTheme(themeMode);
 
   const changeMode = () => {
-    setThemeMode(themeMode === "light" ? "dark" : "light");
+    dispatch(
+      changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" })
+    );
   };
-
   const changeFilter = (todolistId: string, filter: FilterValues) => {
     dispatch(changeTodolistFilterAC({ id: todolistId, filter }));
   };
