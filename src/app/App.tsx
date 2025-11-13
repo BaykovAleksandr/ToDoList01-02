@@ -62,6 +62,9 @@ export const App = () => {
     dispatch(
       changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" })
     );
+    dispatch(
+      changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" })
+    );
   };
   const changeFilter = (todolistId: string, filter: FilterValues) => {
     dispatch(changeTodolistFilterAC({ id: todolistId, filter }));
