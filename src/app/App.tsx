@@ -32,6 +32,7 @@ import Grid from "@mui/material/Grid";
 import { selectThemeMode } from "./app-selectors";
 import { changeThemeModeAC } from "./app-reducer";
 import { getTheme } from '../common/hooks/theme/theme';
+import { MaterialUISwitch } from '@/Switch';
 
 export type Todolist = {
   id: string;
@@ -122,7 +123,7 @@ export const App = () => {
                 <NavButton background={theme.palette.primary.dark}>
                   Faq
                 </NavButton>
-                <Switch color={"default"} onChange={changeMode} />
+                <MaterialUISwitch color={"default"} onChange={changeMode} />
               </div>
             </Container>
           </Toolbar>
