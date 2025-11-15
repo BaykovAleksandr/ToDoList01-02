@@ -4,8 +4,7 @@ import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { getTheme } from "@/common/theme/theme";
 import { NavButton } from "@/common/components/NavButton/NavButton";
-import { MaterialUISwitch } from "@/Switch";
-
+import { MaterialUISwitch } from "@/common/components/Switch/Switch";
 import { AppBar, Container, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { containerSx } from '@/common/styles/container.style';
