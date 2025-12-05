@@ -1,8 +1,11 @@
-import { useAppDispatch } from '@/common/hooks/useAppDispatch';
-import { containerSx } from '@/common/styles/container.style';
-import { Todolist, FilterValues, changeTodolistFilterAC } from '@/features/todolists/model/todolists-reducer';
-import { Box, Button } from '@mui/material';
-
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import { containerSx } from "@/common/styles/container.style";
+import {
+  Todolist,
+  FilterValues,
+  changeTodolistFilterAC,
+} from "@/features/todolists/model/todolists-slice";
+import { Box, Button } from "@mui/material";
 
 type Props = {
   todolist: Todolist;

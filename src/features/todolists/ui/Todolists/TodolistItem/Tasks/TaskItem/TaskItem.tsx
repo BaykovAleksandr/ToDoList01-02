@@ -1,11 +1,16 @@
 import { ListItem, Checkbox, IconButton } from "@mui/material";
 import { ChangeEvent } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan';
-import { useAppDispatch } from '@/common/hooks/useAppDispatch';
-import { deleteTaskAC, changeTaskStatusAC, changeTaskTitleAC, Task } from '@/features/todolists/model/tasks-reducer';
+import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import {
+  deleteTaskAC,
+  changeTaskStatusAC,
+  changeTaskTitleAC,
+  Task,
+} from "@/features/todolists/model/tasks-slice";
 
-import { getListItemSx } from './TaskItem.style';
+import { getListItemSx } from "./TaskItem.style";
 
 type Props = {
   task: Task;

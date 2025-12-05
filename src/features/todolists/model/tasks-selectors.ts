@@ -1,5 +1,4 @@
-import { RootState } from '@/app/store';
-import { TasksState } from './tasks-reducer';
+import { RootState } from "@/app/store";
+import { TasksState } from "./tasks-slice";
 
-
-export const selectTasks = (state: RootState): TasksState => state.tasks
+export const selectTasks = (state: RootState): TasksState => state.tasks;
