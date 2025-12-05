@@ -1,6 +1,6 @@
 import { RootState } from "@/app/store";
-import { DomainTodolist } from './todolists-slice';
+import { Todolist } from '../api/todolistsApi.types';
 
 
-export const selectTodolists = (state: RootState): DomainTodolist[] =>
+export const selectTodolists = (state: RootState): Todolist[] =>
   state.todolists;

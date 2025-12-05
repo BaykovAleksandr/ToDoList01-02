@@ -1,25 +1,37 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { beforeEach, expect, test } from "vitest";
-import type { Todolist } from "../app/App";
 import {
   changeTodolistFilterAC,
-  changeTodolistTitleAC,
+  changeTodolistTitleTC,
   createTodolistAC,
   deleteTodolistAC,
+  DomainTodolist,
   todolistsReducer,
 } from "../todolists-slice";
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Todolist[] = [];
+let startState: DomainTodolist[] = [];
 
 beforeEach(() => {
   todolistId1 = nanoid();
   todolistId2 = nanoid();
 
   startState = [
-    { id: todolistId1, title: "What to learn", filter: "all" },
-    { id: todolistId2, title: "What to buy", filter: "all" },
+    {
+      id: todolistId1,
+      title: "What to learn",
+      filter: "all",
+      addedDate: "", // <-- добавляем обязательные поля
+      order: 0,
+    },
+    {
+      id: todolistId2,
+      title: "What to buy",
+      filter: "all",
+      addedDate: "", // <-- добавляем обязательные поля
+      order: 0,
+    },
   ];
 });
 
@@ -41,12 +53,15 @@ test("correct todolist should be created", () => {
   expect(endState[2].title).toBe(title);
 });
 
-test("correct todolist should change its title", () => {
+
+test("correct todolist should change its title via thunk", () => {
   const title = "New title";
-  const endState = todolistsReducer(
-    startState,
-    changeTodolistTitleAC({ id: todolistId2, title })
-  );
+  const action = {
+    type: changeTodolistTitleTC.fulfilled.type,
+    payload: { id: todolistId2, title },
+  };
+
+  const endState = todolistsReducer(startState, action);
 
   expect(endState[0].title).toBe("What to learn");
   expect(endState[1].title).toBe(title);

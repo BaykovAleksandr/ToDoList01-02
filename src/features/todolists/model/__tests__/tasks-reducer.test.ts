@@ -1,11 +1,12 @@
 import { beforeEach, expect, test } from "vitest";
-import type { TasksState } from "../app/App";
+
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   createTaskAC,
   deleteTaskAC,
   tasksReducer,
+  TasksState,
 } from "../tasks-slice";
 import { createTodolistAC, deleteTodolistAC } from "../todolists-slice";
 

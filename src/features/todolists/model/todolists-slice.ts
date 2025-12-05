@@ -32,15 +32,18 @@ export const todolistsSlice = createSlice({
       }
     }),
     createTodolistAC: create.preparedReducer(
-      (title: string) => ({ payload: { title, id: nanoid() } }),
-
-      (state, action) => {
-        state.push({
-          ...action.payload,
+      (title: string) => {
+        const newTodolist: DomainTodolist = {
+          id: nanoid(),
+          title,
           filter: "all",
+          order: 1,
           addedDate: "",
-          order: 0,
-        });
+        };
+        return { payload: newTodolist };
+      },
+      (state, action) => {
+        state.push(action.payload);
       }
     ),
   }),
@@ -88,11 +91,8 @@ export const changeTodolistTitleTC = createAsyncThunk(
     }
   }
 );
-export const {
-  deleteTodolistAC,
-  createTodolistAC,
-  changeTodolistFilterAC,
-} = todolistsSlice.actions;
+export const { deleteTodolistAC, createTodolistAC, changeTodolistFilterAC } =
+  todolistsSlice.actions;
 
 export const {} = todolistsSlice.actions;
 export const todolistsReducer = todolistsSlice.reducer;
