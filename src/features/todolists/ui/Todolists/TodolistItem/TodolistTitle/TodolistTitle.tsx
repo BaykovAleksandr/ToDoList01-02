@@ -6,13 +6,14 @@ import styles from "./TodolistTitle.module.css";
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import {
-  Todolist,
+  
+  changeTodolistTitleTC,
   deleteTodolistAC,
-  changeTodolistTitleAC,
+  DomainTodolist,
 } from "@/features/todolists/model/todolists-slice";
 
 type Props = {
-  todolist: Todolist;
+  todolist: DomainTodolist;
 };
 
 export const TodolistTitle = ({ todolist }: Props) => {
@@ -25,7 +26,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
   };
 
   const changeTodolistTitle = (title: string) => {
-    dispatch(changeTodolistTitleAC({ id, title }));
+    dispatch(changeTodolistTitleTC({ id, title }));
   };
 
   return (

@@ -1,11 +1,23 @@
-import { useAppSelector } from '@/common/hooks/useAppSelector';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
+import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { Grid, Paper } from "@mui/material";
-import { selectTodolists } from '../../model/todolists-selectors';
-import { TodolistItem } from './TodolistItem/TodolistItem';
-
+import { useEffect } from "react";
+import { selectTodolists } from "../../model/todolists-selectors";
+import { fetchTodolistsTC } from '../../model/todolists-slice';
+import { TodolistItem } from "./TodolistItem/TodolistItem";
 
 export const Todolists = () => {
   const todolists = useAppSelector(selectTodolists);
+  const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   todolistsApi.getTodolists().then((res) => {
+  //     dispatch(setTodolistsAC({ todolists: res.data }));
+  //   });
+  // }, []);
+  useEffect(() => {
+    dispatch(fetchTodolistsTC());
+  }, []);
 
   return (
     <>
