@@ -3,12 +3,7 @@ import { ChangeEvent } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import {
-  deleteTaskAC,
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  Task,
-} from "@/features/todolists/model/tasks-slice";
+import { deleteTaskAC, changeTaskStatusAC, changeTaskTitleAC, Task } from "@/features/todolists/model/tasks-slice";
 
 import { getListItemSx } from "./TaskItem.style";
 
@@ -31,7 +26,7 @@ export const TaskItem = ({ task, todolistId }: Props) => {
         todolistId,
         taskId: task.id,
         isDone: newStatusValue,
-      })
+      }),
     );
   };
 

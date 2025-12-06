@@ -1,11 +1,6 @@
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { containerSx } from "@/common/styles/container.style";
-import {
- 
-  DomainTodolist,
-  FilterValues,
-  changeTodolistFilterAC,
-} from "@/features/todolists/model/todolists-slice";
+import { DomainTodolist, FilterValues, changeTodolistFilterAC } from "@/features/todolists/model/todolists-slice";
 import { Box, Button } from "@mui/material";
 
 type Props = {
@@ -23,11 +18,7 @@ export const FilterButtons = ({ todolist }: Props) => {
 
   return (
     <Box sx={containerSx}>
-      <Button
-        variant={filter === "all" ? "outlined" : "text"}
-        color={"inherit"}
-        onClick={() => changeFilter("all")}
-      >
+      <Button variant={filter === "all" ? "outlined" : "text"} color={"inherit"} onClick={() => changeFilter("all")}>
         All
       </Button>
       <Button

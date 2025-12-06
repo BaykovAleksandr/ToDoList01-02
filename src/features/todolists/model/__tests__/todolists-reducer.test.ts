@@ -39,7 +39,7 @@ test("correct todolist should be deleted", () => {
   const action = deleteTodolistTC.fulfilled(
     todolistId1, // payload
     "", // requestId
-    { id: todolistId1 } // arg (аргумент вызова thunk)
+    { id: todolistId1 }, // arg (аргумент вызова thunk)
   );
 
   const endState = todolistsReducer(startState, action);
@@ -60,7 +60,7 @@ test("correct todolist should be created", () => {
   const action = createTodolistTC.fulfilled(
     newTodolist, // payload (то что возвращает thunk)
     "", // requestId
-    title // arg (аргумент вызова thunk - title)
+    title, // arg (аргумент вызова thunk - title)
   );
 
   const endState = todolistsReducer(startState, action);
@@ -82,10 +82,7 @@ test("correct todolist should change its title via thunk", () => {
 
 test("correct todolist should change its filter", () => {
   const filter = "completed";
-  const endState = todolistsReducer(
-    startState,
-    changeTodolistFilterAC({ id: todolistId2, filter })
-  );
+  const endState = todolistsReducer(startState, changeTodolistFilterAC({ id: todolistId2, filter }));
 
   expect(endState[0].filter).toBe("all");
   expect(endState[1].filter).toBe(filter);

@@ -8,7 +8,7 @@ import {
   tasksReducer,
   TasksState,
 } from "../tasks-slice";
-import { createTodolistTC, deleteTodolistTC } from '../todolists-slice';
+import { createTodolistTC, deleteTodolistTC } from "../todolists-slice";
 
 let startState: TasksState = {};
 
@@ -28,10 +28,7 @@ beforeEach(() => {
 });
 
 test("correct task should be deleted", () => {
-  const endState = tasksReducer(
-    startState,
-    deleteTaskAC({ todolistId: "todolistId2", taskId: "2" })
-  );
+  const endState = tasksReducer(startState, deleteTaskAC({ todolistId: "todolistId2", taskId: "2" }));
 
   expect(endState).toEqual({
     todolistId1: [
@@ -52,7 +49,7 @@ test("correct task should be created at correct array", () => {
     createTaskAC({
       todolistId: "todolistId2",
       title: "juice",
-    })
+    }),
   );
 
   expect(endState.todolistId1.length).toBe(3);
@@ -69,7 +66,7 @@ test("correct task should change its status", () => {
       todolistId: "todolistId2",
       taskId: "2",
       isDone: false,
-    })
+    }),
   );
 
   expect(endState.todolistId2[1].isDone).toBe(false);
@@ -83,7 +80,7 @@ test("correct task should change its title", () => {
       todolistId: "todolistId2",
       taskId: "2",
       title: "coffee",
-    })
+    }),
   );
 
   expect(endState.todolistId2[1].title).toBe("coffee");
@@ -97,8 +94,8 @@ test("array should be created for new todolist", () => {
     createTodolistTC.fulfilled(
       { id: "new-id", title: "New todolist", addedDate: "", order: 0 }, // То что возвращает thunk
       "", // requestId
-      "New todolist" // аргумент (title)
-    )
+      "New todolist", // аргумент (title)
+    ),
   );
 
   const keys = Object.keys(endState);
@@ -113,8 +110,8 @@ test("property with todolistId should be deleted", () => {
     deleteTodolistTC.fulfilled(
       "todolistId2", // То что возвращает thunk (id)
       "", // requestId
-      { id: "todolistId2" } // аргумент
-    )
+      { id: "todolistId2" }, // аргумент
+    ),
   );
 
   const keys = Object.keys(endState);

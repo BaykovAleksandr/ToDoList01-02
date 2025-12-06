@@ -1,9 +1,9 @@
-import { useAppDispatch } from '@/common/hooks/useAppDispatch';
+import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { Grid, Paper } from "@mui/material";
 import { useEffect } from "react";
-import { selectTodolists } from "../../model/todolists-selectors";
-import { fetchTodolistsTC } from '../../model/todolists-slice';
+
+import { fetchTodolistsTC, selectTodolists } from "../../model/todolists-slice";
 import { TodolistItem } from "./TodolistItem/TodolistItem";
 
 export const Todolists = () => {

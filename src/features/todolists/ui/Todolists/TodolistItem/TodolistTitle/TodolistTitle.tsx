@@ -5,11 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "./TodolistTitle.module.css";
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import {
-  changeTodolistTitleTC,
-  deleteTodolistTC,
-  DomainTodolist,
-} from "@/features/todolists/model/todolists-slice";
+import { changeTodolistTitleTC, deleteTodolistTC, DomainTodolist } from "@/features/todolists/model/todolists-slice";
 
 type Props = {
   todolist: DomainTodolist;

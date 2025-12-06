@@ -16,7 +16,7 @@ export const EditableSpan = ({ value, onChange }: Props) => {
 
   const turnOffEditMode = () => {
     setIsEditMode(false);
-	onChange(title);
+    onChange(title);
   };
 
   const changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
