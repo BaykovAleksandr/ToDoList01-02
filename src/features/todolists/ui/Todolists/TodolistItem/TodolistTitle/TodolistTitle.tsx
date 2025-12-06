@@ -6,9 +6,8 @@ import styles from "./TodolistTitle.module.css";
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import {
-  
   changeTodolistTitleTC,
-  deleteTodolistAC,
+  deleteTodolistTC,
   DomainTodolist,
 } from "@/features/todolists/model/todolists-slice";
 
@@ -22,7 +21,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const dispatch = useAppDispatch();
 
   const deleteTodolist = () => {
-    dispatch(deleteTodolistAC({ id }));
+    dispatch(deleteTodolistTC({ id }));
   };
 
   const changeTodolistTitle = (title: string) => {
