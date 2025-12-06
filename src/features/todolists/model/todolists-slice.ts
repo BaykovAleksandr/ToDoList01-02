@@ -22,21 +22,6 @@ export const todolistsSlice = createSlice({
         todolist.filter = action.payload.filter;
       }
     }),
-    createTodolistAC: create.preparedReducer(
-      (title: string) => {
-        const newTodolist: DomainTodolist = {
-          id: nanoid(),
-          title,
-          filter: "all",
-          order: 1,
-          addedDate: "",
-        };
-        return { payload: newTodolist };
-      },
-      (state, action) => {
-        state.push(action.payload);
-      }
-    ),
   }),
   extraReducers: (builder) => {
     builder
@@ -63,6 +48,14 @@ export const todolistsSlice = createSlice({
         if (index !== -1) {
           state.splice(index, 1);
         }
+      })
+      .addCase(createTodolistTC.fulfilled, (state, action) => {
+        const serverTodolist = action.payload;
+        const newTodolist: DomainTodolist = {
+          ...serverTodolist,
+          filter: "all",
+        };
+        state.push(newTodolist);
       });
   },
 });
@@ -103,7 +96,18 @@ export const deleteTodolistTC = createAsyncThunk(
   }
 );
 
-export const { createTodolistAC, changeTodolistFilterAC } =
-  todolistsSlice.actions;
+export const createTodolistTC = createAsyncThunk(
+  `${todolistsSlice.name}/createTodolistTC`,
+  async (title: string, thunkAPI) => {
+    try {
+      const res = await todolistsApi.createTodolist(title);
+      return res.data.data.item;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const { changeTodolistFilterAC } = todolistsSlice.actions;
 
 export const todolistsReducer = todolistsSlice.reducer;

@@ -3,8 +3,8 @@ import { beforeEach, expect, test } from "vitest";
 import {
   changeTodolistFilterAC,
   changeTodolistTitleTC,
-  createTodolistAC,
-  deleteTodolistAC,
+  createTodolistTC,
+  deleteTodolistTC,
   DomainTodolist,
   todolistsReducer,
 } from "../todolists-slice";
@@ -36,24 +36,37 @@ beforeEach(() => {
 });
 
 test("correct todolist should be deleted", () => {
-  const endState = todolistsReducer(
-    startState,
-    deleteTodolistAC({ id: todolistId1 })
+  const action = deleteTodolistTC.fulfilled(
+    todolistId1, // payload
+    "", // requestId
+    { id: todolistId1 } // arg (аргумент вызова thunk)
   );
 
+  const endState = todolistsReducer(startState, action);
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistId2);
 });
 
 test("correct todolist should be created", () => {
   const title = "New todolist";
-  const endState = todolistsReducer(startState, createTodolistAC(title));
+  const newTodolist: DomainTodolist = {
+    id: "new-id",
+    title,
+    filter: "all",
+    addedDate: "",
+    order: 0,
+  };
 
+  const action = createTodolistTC.fulfilled(
+    newTodolist, // payload (то что возвращает thunk)
+    "", // requestId
+    title // arg (аргумент вызова thunk - title)
+  );
+
+  const endState = todolistsReducer(startState, action);
   expect(endState.length).toBe(3);
   expect(endState[2].title).toBe(title);
 });
-
-
 test("correct todolist should change its title via thunk", () => {
   const title = "New title";
   const action = {

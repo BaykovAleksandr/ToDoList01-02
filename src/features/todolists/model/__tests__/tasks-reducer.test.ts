@@ -8,7 +8,7 @@ import {
   tasksReducer,
   TasksState,
 } from "../tasks-slice";
-import { createTodolistAC, deleteTodolistAC } from "../todolists-slice";
+import { createTodolistTC, deleteTodolistTC } from '../todolists-slice';
 
 let startState: TasksState = {};
 
@@ -91,28 +91,33 @@ test("correct task should change its title", () => {
 });
 
 test("array should be created for new todolist", () => {
-  const endState = tasksReducer(startState, createTodolistAC("New todolist"));
+  const endState = tasksReducer(
+    startState,
+    // Используйте fulfilled action из thunk
+    createTodolistTC.fulfilled(
+      { id: "new-id", title: "New todolist", addedDate: "", order: 0 }, // То что возвращает thunk
+      "", // requestId
+      "New todolist" // аргумент (title)
+    )
+  );
 
   const keys = Object.keys(endState);
-  const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2");
-  if (!newKey) {
-    throw Error("New key should be added");
-  }
-
   expect(keys.length).toBe(3);
-  expect(endState[newKey]).toEqual([]);
+  expect(endState["new-id"]).toEqual([]);
 });
 
 test("property with todolistId should be deleted", () => {
   const endState = tasksReducer(
     startState,
-    deleteTodolistAC({ id: "todolistId2" })
+    // Используйте fulfilled action из thunk
+    deleteTodolistTC.fulfilled(
+      "todolistId2", // То что возвращает thunk (id)
+      "", // requestId
+      { id: "todolistId2" } // аргумент
+    )
   );
 
   const keys = Object.keys(endState);
-
   expect(keys.length).toBe(1);
-  expect(endState["todolistId2"]).not.toBeDefined();
-  // or
   expect(endState["todolistId2"]).toBeUndefined();
 });
