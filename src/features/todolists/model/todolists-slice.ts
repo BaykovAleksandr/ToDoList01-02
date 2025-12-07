@@ -7,10 +7,13 @@ export type DomainTodolist = Todolist & {
   filter: FilterValues;
 };
 export type FilterValues = "all" | "active" | "completed";
-export const selectTodolists = (state: RootState): DomainTodolist[] => state.todolists;
+//export const selectTodolists = (state: RootState): DomainTodolist[] => state.todolists;
 export const todolistsSlice = createSlice({
   name: "todolists",
   initialState: [] as DomainTodolist[],
+  selectors: {
+    selectTodolists: (state: DomainTodolist[]) => state
+  },
   reducers: (create) => ({
     changeTodolistFilterAC: create.reducer<{
       id: string;
@@ -101,5 +104,6 @@ export const createTodolistTC = createAsyncThunk(
 );
 
 export const { changeTodolistFilterAC } = todolistsSlice.actions;
+export const { selectTodolists} = todolistsSlice.selectors
 
 export const todolistsReducer = todolistsSlice.reducer;
