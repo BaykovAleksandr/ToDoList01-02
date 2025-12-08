@@ -1,4 +1,3 @@
-import { RootState } from "@/app/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { todolistsApi } from "../api/todolistsApi";
 import { Todolist } from "../api/todolistsApi.types";
@@ -28,8 +27,8 @@ export const todolistsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodolistsTC.fulfilled, (state, action) => {
-        return action.payload.todolists.map((tl) => {
-          return { ...tl, filter: "all" };
+        action.payload?.todolists.forEach((tl) => {
+          state.push({ ...tl, filter: "all" });
         });
       })
       .addCase(fetchTodolistsTC.rejected, (state, action) => {
@@ -53,7 +52,7 @@ export const todolistsSlice = createSlice({
           ...serverTodolist,
           filter: "all",
         };
-        state.push(newTodolist);
+        state.unshift(newTodolist);
       });
   },
 });
