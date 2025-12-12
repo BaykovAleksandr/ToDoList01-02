@@ -1,6 +1,6 @@
 import { CreateItemForm } from "@/common/components/CreateItemForm/CreateItemForm";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
-import { createTaskAC } from "@/features/todolists/model/tasks-slice";
+import { createTaskTC } from "@/features/todolists/model/tasks-slice";
 import { DomainTodolist } from "@/features/todolists/model/todolists-slice";
 import { FilterButtons } from "./FilterButtons/FilterButtons";
 import { Tasks } from "./Tasks/Tasks";
@@ -14,7 +14,7 @@ export const TodolistItem = ({ todolist }: Props) => {
   const dispatch = useAppDispatch();
 
   const createTask = (title: string) => {
-    dispatch(createTaskAC({ todolistId: todolist.id, title }));
+    dispatch(createTaskTC({ todolistId: todolist.id, title }));
   };
 
   return (
