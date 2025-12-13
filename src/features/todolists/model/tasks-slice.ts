@@ -73,6 +73,33 @@ export const tasksSlice = createAppSlice({
       },
     ),
 
+    // updateTaskTC: create.asyncThunk(
+    //   async (
+    //     payload: { todolistId: string; taskId: string; domainModel: Partial<UpdateTaskModel> },
+    //     { dispatch, getState, rejectWithValue },
+    //   ) => {
+    //     const { todolistId, taskId, domainModel } = payload;
+    //     const allTodolistTasks = (getState() as RootState).tasks[todolistId];
+    //     const task = allTodolistTasks.find((task) => task.id === taskId);
+    //     if (!task) {
+    //       return rejectWithValue(null);
+    //     }
+    //     const model: Partial<UpdateTaskModel> = domainModel;
+    //     try {
+    //       const res = await tasksApi.updateTask({ todolistId, taskId, model });
+    //       return { task: res.data.data.item };
+    //     } catch (error) {
+    //       return rejectWithValue(null);
+    //     }
+    //   },
+    //   { fulfilled: (state, action) => {
+    //     let task = state[action.payload.task.todoListId].find((task) => task.id === action.payload.task.id);
+    //     if (task) {
+    //       task = action.payload.task;
+    //     }
+    //   } },
+    // ),
+
     changeTaskStatusTC: create.asyncThunk(
       async (payload: { todolistId: string; taskId: string; status: TaskStatus }, thunkAPI) => {
         const { todolistId, taskId, status } = payload;
@@ -109,15 +136,42 @@ export const tasksSlice = createAppSlice({
         },
       },
     ),
+    changeTaskTitleTC: create.asyncThunk(
+      async (payload: { todolistId: string; taskId: string; title: string }, thunkAPI) => {
+        const { todolistId, taskId, title } = payload;
 
-    changeTaskTitleAC: create.reducer<{
-      todolistId: string;
-      taskId: string;
-      title: string;
-    }>((state, action) => {
-      const task = state[action.payload.todolistId].find((todo) => todo.id === action.payload.taskId);
-      if (task) task.title = action.payload.title;
-    }),
+        const allTodolistTasks = (thunkAPI.getState() as RootState).tasks[todolistId];
+        const task = allTodolistTasks.find((task) => task.id === taskId);
+
+        if (!task) {
+          return thunkAPI.rejectWithValue(null);
+        }
+
+        const model: UpdateTaskModel = {
+          description: task.description,
+          title,
+          priority: task.priority,
+          startDate: task.startDate,
+          deadline: task.deadline,
+          status: task.status,
+        };
+
+        try {
+          const res = await tasksApi.updateTask({ todolistId, taskId, model });
+          return { task: res.data.data.item };
+        } catch (error) {
+          return thunkAPI.rejectWithValue(null);
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          const task = state[action.payload.task.todoListId].find((task) => task.id === action.payload.task.id);
+          if (task) {
+            task.title = action.payload.task.title;
+          }
+        },
+      },
+    ),
   }),
   extraReducers: (builder) => {
     builder
@@ -131,7 +185,7 @@ export const tasksSlice = createAppSlice({
   },
 });
 
-export const { fetchTasksTC, deleteTaskTC, createTaskTC, changeTaskStatusTC, changeTaskTitleAC } = tasksSlice.actions;
+export const { fetchTasksTC, deleteTaskTC, createTaskTC, changeTaskStatusTC, changeTaskTitleTC } = tasksSlice.actions;
 export const { selectTasks } = tasksSlice.selectors;
 
 export const tasksReducer = tasksSlice.reducer;

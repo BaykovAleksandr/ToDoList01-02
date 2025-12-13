@@ -2,7 +2,7 @@ import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { TaskStatus } from "@/common/enums";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { DomainTask } from "@/features/todolists/api/tasksApi.types";
-import { changeTaskStatusTC, changeTaskTitleAC, deleteTaskTC } from "@/features/todolists/model/tasks-slice";
+import { changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC } from "@/features/todolists/model/tasks-slice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Checkbox, IconButton, ListItem } from "@mui/material";
 import { ChangeEvent } from "react";
@@ -32,7 +32,7 @@ export const TaskItem = ({ task, todolistId }: Props) => {
   };
 
   const changeTaskTitle = (title: string) => {
-    dispatch(changeTaskTitleAC({ todolistId, taskId: task.id, title }));
+    dispatch(changeTaskTitleTC({ todolistId, taskId: task.id, title }));
   };
 
   const isTaskCompleted = task.status === TaskStatus.Completed;
