@@ -121,9 +121,12 @@ export const tasksSlice = createAppSlice({
         };
 
         try {
+          thunkAPI.dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.updateTask({ todolistId, taskId, model });
+          thunkAPI.dispatch(setAppStatusAC({ status: "succeeded" }));
           return { task: res.data.data.item };
         } catch (error) {
+           thunkAPI.dispatch(setAppStatusAC({ status: "failed" }));
           return thunkAPI.rejectWithValue(null);
         }
       },
@@ -157,9 +160,12 @@ export const tasksSlice = createAppSlice({
         };
 
         try {
+          thunkAPI.dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.updateTask({ todolistId, taskId, model });
+          thunkAPI.dispatch(setAppStatusAC({ status: "succeeded" }));
           return { task: res.data.data.item };
         } catch (error) {
+          thunkAPI.dispatch(setAppStatusAC({ status: "failed" }));
           return thunkAPI.rejectWithValue(null);
         }
       },
