@@ -22,14 +22,14 @@ beforeEach(() => {
       id: todolistId1,
       title: "What to learn",
       filter: "all",
-      addedDate: "", // <-- добавляем обязательные поля
+      addedDate: "", 
       order: 0,
     },
     {
       id: todolistId2,
       title: "What to buy",
       filter: "all",
-      addedDate: "", // <-- добавляем обязательные поля
+      addedDate: "", 
       order: 0,
     },
   ];
@@ -38,7 +38,7 @@ beforeEach(() => {
 test("correct todolist should be deleted", () => {
   const action = deleteTodolistTC.fulfilled(
     todolistId1, // payload
-    "", // requestId
+    "requestId", // requestId
     { id: todolistId1 }, // arg (аргумент вызова thunk)
   );
 
@@ -49,24 +49,23 @@ test("correct todolist should be deleted", () => {
 
 test("correct todolist should be created", () => {
   const title = "New todolist";
-  const newTodolist: DomainTodolist = {
-    id: "new-id",
-    title,
-    filter: "all",
-    addedDate: "",
-    order: 0,
-  };
-
+  
   const action = createTodolistTC.fulfilled(
-    newTodolist, // payload (то что возвращает thunk)
-    "", // requestId
-    title, // arg (аргумент вызова thunk - title)
+    { 
+      id: "new-id", 
+      title, 
+      addedDate: "", 
+      order: 0 
+    }, 
+    "requestId",
+    title,
   );
 
   const endState = todolistsReducer(startState, action);
   expect(endState.length).toBe(3);
-  expect(endState[2].title).toBe(title);
-});
+  expect(endState[0].title).toBe(title); 
+})
+
 test("correct todolist should change its title via thunk", () => {
   const title = "New title";
   const action = {
