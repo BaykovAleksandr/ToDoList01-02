@@ -4,14 +4,17 @@ import TextField from "@mui/material/TextField";
 type Props = {
   value: string;
   onChange: (title: string) => void;
+  disabled: boolean;
 };
 
-export const EditableSpan = ({ value, onChange }: Props) => {
+export const EditableSpan = ({ value, onChange, disabled }: Props) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [title, setTitle] = useState(value);
 
   const turnOnEditMode = () => {
-    setIsEditMode(true);
+    if (!disabled) {
+      setIsEditMode(true);
+    }
   };
 
   const turnOffEditMode = () => {
@@ -35,6 +38,7 @@ export const EditableSpan = ({ value, onChange }: Props) => {
               onChange={changeTitle}
               onBlur={turnOffEditMode}
               autoFocus
+              disabled={disabled}
             />
           ) : (
             <span onDoubleClick={turnOnEditMode}>{value}</span>

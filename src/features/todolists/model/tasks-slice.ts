@@ -19,7 +19,7 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.getTasks(todolistId);
-          
+
           dispatch(setAppStatusAC({ status: "succeeded" }));
           return { todolistId, tasks: res.data.items };
         } catch (error) {

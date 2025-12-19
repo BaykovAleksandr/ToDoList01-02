@@ -1,6 +1,7 @@
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan";
 import { TaskStatus } from "@/common/enums";
 import { useAppDispatch } from "@/common/hooks/useAppDispatch";
+import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { DomainTask } from "@/features/todolists/api/tasksApi.types";
 import { changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC } from "@/features/todolists/model/tasks-slice";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,6 +17,12 @@ type Props = {
 export const TaskItem = ({ task, todolistId }: Props) => {
   const dispatch = useAppDispatch();
 
+  const todolist = useAppSelector((state) => state.todolists.find((tl) => tl.id === todolistId));
+
+  if (!todolist) return null;
+
+  const isDisabled = todolist.entityStatus === "loading";
+
   const deleteTask = () => {
     dispatch(deleteTaskTC({ todolistId, taskId: task.id }));
   };
@@ -24,7 +31,7 @@ export const TaskItem = ({ task, todolistId }: Props) => {
     const newStatusValue = e.currentTarget.checked;
     dispatch(
       changeTaskStatusTC({
-        todolistId,
+        todolistId: todolist.id,
         taskId: task.id,
         status: newStatusValue ? TaskStatus.Completed : TaskStatus.New,
       }),
@@ -40,10 +47,10 @@ export const TaskItem = ({ task, todolistId }: Props) => {
   return (
     <ListItem sx={getListItemSx(isTaskCompleted)}>
       <div>
-        <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} />
-        <EditableSpan value={task.title} onChange={changeTaskTitle} />
+        <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={isDisabled} />
+        <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={isDisabled} />
       </div>
-      <IconButton onClick={deleteTask}>
+      <IconButton onClick={deleteTask} disabled={isDisabled}>
         <DeleteIcon />
       </IconButton>
     </ListItem>
