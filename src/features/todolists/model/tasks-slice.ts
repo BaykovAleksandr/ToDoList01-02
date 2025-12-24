@@ -2,7 +2,7 @@ import { RootState } from "@/app/store";
 import { ResultCode, TaskStatus } from "@/common/enums";
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 import { tasksApi } from "../api/tasksApi";
-import { DomainTask, UpdateTaskModel } from "../api/tasksApi.types";
+import { DomainTask, domainTaskSchema, UpdateTaskModel } from "../api/tasksApi.types";
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice";
 import { setAppStatusAC } from "@/app/app-slice";
 
@@ -19,11 +19,11 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.getTasks(todolistId);
-
+          domainTaskSchema.array().parse(res.data.items); // 💎
           dispatch(setAppStatusAC({ status: "succeeded" }));
           return { todolistId, tasks: res.data.items };
         } catch (error) {
-          handleServerNetworkError(error, dispatch);
+          handleServerNetworkError(dispatch, error);
           return rejectWithValue(null);
         }
       },
@@ -70,7 +70,7 @@ export const tasksSlice = createAppSlice({
             return thunkAPI.rejectWithValue(null);
           }
         } catch (error) {
-          handleServerNetworkError(error, thunkAPI.dispatch);
+          handleServerNetworkError(thunkAPI.dispatch, error);
           return thunkAPI.rejectWithValue(null);
         }
       },
