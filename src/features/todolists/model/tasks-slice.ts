@@ -19,9 +19,13 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.getTasks(todolistId);
-          domainTaskSchema.array().parse(res.data.items); // 💎
+          const validatedData = domainTaskSchema.array().safeParse(res.data.items); // 💎
+          if (!validatedData.success) {
+            console.error("Zod validation error for fetch tasks:", validatedData.error);
+            return rejectWithValue(null);
+          }
           dispatch(setAppStatusAC({ status: "succeeded" }));
-          return { todolistId, tasks: res.data.items };
+          return { todolistId, tasks: validatedData.data };
         } catch (error) {
           handleServerNetworkError(dispatch, error);
           return rejectWithValue(null);
@@ -38,10 +42,14 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }));
           const res = await tasksApi.createTask(payload);
-
+          const validatedData = domainTaskSchema.safeParse(res.data.data.item); // 💎
           if (res.data.resultCode === ResultCode.Success) {
+            if (!validatedData.success) {
+              console.error("Zod validation error for create tasks:", validatedData.error);
+              return rejectWithValue(null);
+            }
             dispatch(setAppStatusAC({ status: "succeeded" }));
-            return { task: res.data.data.item };
+            return { task: validatedData.data };
           } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
@@ -110,8 +118,13 @@ export const tasksSlice = createAppSlice({
           const res = await tasksApi.updateTask({ todolistId, taskId, model });
 
           if (res.data.resultCode === ResultCode.Success) {
+            const validationResult = domainTaskSchema.safeParse(res.data.data.item);
+            if (!validationResult.success) {
+              console.error("Zod validation error for updated task:", validationResult.error);
+              return thunkAPI.rejectWithValue(null);
+            }
             thunkAPI.dispatch(setAppStatusAC({ status: "succeeded" }));
-            return { task: res.data.data.item };
+            return { task: validationResult.data };
           } else {
             handleServerAppError(res.data, thunkAPI.dispatch);
             return thunkAPI.rejectWithValue(null);
@@ -155,8 +168,13 @@ export const tasksSlice = createAppSlice({
           const res = await tasksApi.updateTask({ todolistId, taskId, model });
 
           if (res.data.resultCode === ResultCode.Success) {
+            const validationResult = domainTaskSchema.safeParse(res.data.data.item);
+            if (!validationResult.success) {
+              console.error("Zod validation error for updated task:", validationResult.error);
+              return thunkAPI.rejectWithValue(null);
+            }
             thunkAPI.dispatch(setAppStatusAC({ status: "succeeded" }));
-            return { task: res.data.data.item };
+            return { task: validationResult.data };
           } else {
             handleServerAppError(res.data, thunkAPI.dispatch);
             return thunkAPI.rejectWithValue(null);
