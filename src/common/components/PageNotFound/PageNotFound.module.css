@@ -3,10 +3,18 @@
   font-size: 250px;
   margin: 0;
 }
- 
+
 .subtitle {
   text-align: center;
   font-size: 50px;
-  margin: 0;
+  margin: 20px;
   text-transform: uppercase;
+}
+
+.link {
+  height: 50px;
+  line-height: 50px;
+  width: 300px;
+  display: block;
+  margin: 50px auto;
 }
