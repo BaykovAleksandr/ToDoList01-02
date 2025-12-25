@@ -12,13 +12,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import styles from "./Login.module.css";
-import { LoginInputs, loginSchema } from '../../lib/schemas';
-
-// type LoginInputs = {
-//   email: string;
-//   password: string;
-//   rememberMe: boolean;
-// };
+import { LoginInputs, loginSchema } from "../../lib/schemas";
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode);
@@ -66,14 +60,24 @@ export const Login = () => {
             </p>
           </FormLabel>
           <FormGroup>
-            <TextField
-              label="Email"
-              margin="normal"
-              error={!!errors.email}
-              {...register("email")}
-            />
+            <TextField label="Email" margin="normal" error={!!errors.email} {...register("email")} />
             {errors.email && <span className={styles.errorMessage}>{errors.email.message}</span>}
-            <TextField type="password" label="Password" margin="normal" {...register("password")} />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  label="Password"
+                  type="password" 
+                  margin="normal"
+                  error={!!error}
+                  helperText={error?.message}
+                  fullWidth 
+                />
+              )}
+            />
+
             <FormControlLabel
               label="Remember me"
               control={

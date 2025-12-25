@@ -1,9 +1,9 @@
 import { setAppStatusAC } from "@/app/app-slice";
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 import { todolistsApi } from "../api/todolistsApi";
-import { Todolist } from "../api/todolistsApi.types";
 import { RequestStatus } from "@/common/types";
 import { ResultCode } from "@/common/enums";
+import { Todolist, todolistSchema } from "../lib/schemas";
 
 export type DomainTodolist = Todolist & {
   filter: FilterValues;
@@ -24,10 +24,16 @@ export const todolistsSlice = createAppSlice({
           dispatch(setAppStatusAC({ status: "loading" }));
 
           const res = await todolistsApi.getTodolists();
+          const validatedData = todolistSchema.array().safeParse(res.data);
+          if (!validatedData.success) {
+            console.error("Zod validation error for fetch todolists:", validatedData.error);
+            return rejectWithValue(null);
+          }
           dispatch(setAppStatusAC({ status: "succeeded" }));
-          return { todolists: res.data };
+          return { todolists: validatedData.data };
         } catch (error) {
-          handleServerNetworkError(error, dispatch);
+          console.log(error);
+          handleServerNetworkError(dispatch, error);
           return rejectWithValue(null);
         }
       },
@@ -46,8 +52,13 @@ export const todolistsSlice = createAppSlice({
 
           const res = await todolistsApi.createTodolist(title);
           if (res.data.resultCode === ResultCode.Success) {
+            const validatedTodolist = todolistSchema.safeParse(res.data.data.item);
+            if (!validatedTodolist.success) {
+              console.error("Zod validation error for created todolist:", validatedTodolist.error);
+              return rejectWithValue(null);
+            }
             dispatch(setAppStatusAC({ status: "succeeded" }));
-            return res.data.data.item;
+            return validatedTodolist.data;
           } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null);
