@@ -32,7 +32,7 @@ export const Tasks = ({ todolist }: Props) => {
   return (
     <>
       {filteredTasks && filteredTasks.length === 0 ? (
-        <p>Тасок нет</p>
+        <p>No tasks</p>
       ) : (
         <List>
           {filteredTasks?.map((task) => (
