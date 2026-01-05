@@ -7,10 +7,13 @@ import { MaterialUISwitch } from "@/common/components/Switch/Switch";
 import { AppBar, Container, IconButton, LinearProgress, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { containerSx } from "@/common/styles/container.style";
+import { logoutTC, selectIsLoggedIn } from '@/features/auth/model/auth-slice';
+import { Link } from 'react-router';
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode);
   const selectAppStatus = useAppSelector(selectStatus);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const dispatch = useAppDispatch();
 
@@ -18,6 +21,10 @@ export const Header = () => {
 
   const changeMode = () => {
     dispatch(changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" }));
+  };
+
+  const logout = () => {
+    dispatch(logoutTC());
   };
 
   return (
@@ -28,14 +35,15 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
           <div>
-            <NavButton>Sign in</NavButton>
-            <NavButton>Sign up</NavButton>
-            <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
+            {isLoggedIn && <NavButton onClick={logout}>Sign out</NavButton>}
+            <Link to="/faq">
+              <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
+            </Link>
             <MaterialUISwitch color={"default"} onChange={changeMode} />
           </div>
         </Container>
       </Toolbar>
-      {selectAppStatus === 'loading' && <LinearProgress />}
+      {selectAppStatus === "loading" && <LinearProgress />}
     </AppBar>
   );
 };

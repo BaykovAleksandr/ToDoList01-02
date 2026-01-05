@@ -2,7 +2,6 @@ import { useAppDispatch } from "@/common/hooks/useAppDispatch";
 import { useAppSelector } from "@/common/hooks/useAppSelector";
 import { Grid, Paper } from "@mui/material";
 import { useEffect } from "react";
-
 import { fetchTodolistsTC, selectTodolists } from "../../model/todolists-slice";
 import { TodolistItem } from "./TodolistItem/TodolistItem";
 

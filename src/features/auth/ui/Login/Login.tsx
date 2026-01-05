@@ -13,11 +13,19 @@ import Grid from "@mui/material/Grid";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import styles from "./Login.module.css";
 import { LoginInputs, loginSchema } from "../../lib/schemas";
+import { loginTC, selectIsLoggedIn } from '../../model/auth-slice';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
+import { Navigate } from 'react-router';
+import { Path } from '@/common/routing/Routing';
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode);
 
   const theme = getTheme(themeMode);
+
+  const dispatch = useAppDispatch()
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const {
     register,
@@ -31,10 +39,14 @@ export const Login = () => {
   });
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    console.log(data);
+    dispatch(loginTC(data))
     reset();
   };
 
+  if (isLoggedIn) {
+    return <Navigate to={Path.Main} />;
+  }
+ 
   return (
     <Grid container justifyContent={"center"}>
       <form onSubmit={handleSubmit(onSubmit)}>
