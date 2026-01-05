@@ -139,6 +139,9 @@ export const todolistsSlice = createAppSlice({
         },
       },
     ),
+    clearTodolistsData: create.reducer<DomainTodolist[]>((state: DomainTodolist[]) => {
+      state.length = 0;
+    }),
     changeTodolistFilterAC: create.reducer<{
       id: string;
       filter: FilterValues;
@@ -167,6 +170,7 @@ export const {
   deleteTodolistTC,
   changeTodolistTitleTC,
   changeTodolistStatusAC,
+  clearTodolistsData
 } = todolistsSlice.actions;
 export const { selectTodolists } = todolistsSlice.selectors;
 

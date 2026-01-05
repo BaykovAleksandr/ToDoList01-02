@@ -4,7 +4,7 @@ import { ResultCode } from "@/common/enums";
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from "@/common/utils";
 import { authApi } from "../api/authApi";
 import { LoginInputs } from "../lib/schemas";
-import { clearDataAC } from '@/common/actions';
+import { clearTodolistsData } from '@/features/todolists/model/todolists-slice';
 
 export const authSlice = createAppSlice({
   name: "auth",
@@ -46,7 +46,7 @@ export const authSlice = createAppSlice({
           const res = await authApi.logout();
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: "succeeded" }));
-            dispatch(clearDataAC());
+            dispatch(clearTodolistsData([]));
             localStorage.removeItem(AUTH_TOKEN);
             return { isLoggedIn: false };
           } else {
